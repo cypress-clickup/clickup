@@ -1,0 +1,6 @@
+{
+  "env": {
+    "BASE_URL": "https://api.clickup.com/api/v2"
+  },
+  "watchForFileChanges": false
+}
