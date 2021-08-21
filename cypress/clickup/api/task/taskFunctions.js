@@ -1,19 +1,24 @@
-
 const feature = require('../features');
 const spaceJson = require('../../../fixtures/space/space.json')
+const folderJson = require('../../../fixtures/folder/folder.json')
+const listJson = require('../../../fixtures/list/list.json')
+const endpointSpace = require('../../../fixtures/endpoint/space.json')
+let teamId = ''
+let spaceId = ''
+let folderId = ''
+export function getIdList() {
+    return feature.getAll("/team").then((response) => {
+        teamId = response.body.teams[0].id
+        feature.create(`/team/${teamId}/space`, spaceJson).then((response) => {
+            spaceId = response.body.id
+            feature.create(`/space/${spaceId}/folder`, folderJson).then((response) => {
+                folderId = response.body.id
+                feature.create(`/folder/${folderId}/list`, listJson)
+            })
+        })
+    })
+}
 
-export async function getIdList() {
-    let teamId = ''
-    let spaceId = ''
-    let folderId = ''
-    let listId = ''
-    let taskId = ''
-    teamId = await feature.getAll("/team")
-    teamId = teamId.body.teams[0].id
-    spaceId = await feature.create(`/team/${teamId}/space`, spaceJson)
-    console.log("spaceId1", spaceId)
-
-    spaceId = spaceId.body.teams.id
-    console.log("teamId", teamId)
-    console.log("spaceId2", spaceId)
+export function deleteSpace() {
+    feature.deleteOne("/space", spaceId)
 }

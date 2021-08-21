@@ -1,3 +1,4 @@
 {
-  "list": "/list"
+  "list": "/list",
+  "post": "/folder/{id}/list"
 }
