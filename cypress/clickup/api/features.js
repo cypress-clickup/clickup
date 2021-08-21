@@ -1,6 +1,7 @@
+const methods = require('../../fixtures/endpoint/methods.json');
 export function getAll(endpoint) {
     const options = {
-        "method": 'GET',
+        "method": methods.GET,
         "url": Cypress.env('BASE_URL') + endpoint,
         "headers": {
             'Accept': 'application/json',
@@ -12,7 +13,7 @@ export function getAll(endpoint) {
 
 export function getOne(endpoint, idObject) {
     const options = {
-        "method": 'GET',
+        "method": methods.GET,
         "url": Cypress.env('BASE_URL') + endpoint + '/' + idObject,
         "headers": {
             'Accept': 'application/json',
@@ -24,7 +25,7 @@ export function getOne(endpoint, idObject) {
 
 export function deleteOne(endpoint, idObject) {
     const options = {
-        "method": 'DELETE',
+        "method": methods.DELETE,
         "url": Cypress.env('BASE_URL') + endpoint + '/' + idObject,
         "headers": {
             'Accept': 'application/json',
@@ -36,7 +37,20 @@ export function deleteOne(endpoint, idObject) {
 
 export function create(endpoint, jsonData) {
     const options = {
-        "method": 'POST',
+        "method": methods.POST,
+        "url": Cypress.env('BASE_URL') + endpoint,
+        "headers": {
+            'Accept': 'application/json',
+            'Authorization': Cypress.env('API_TOKEN')
+        },
+        "body": jsonData
+    }
+    return cy.request(options)
+}
+
+export function put(endpoint, jsonData) {
+    const options = {
+        "method": methods.PUT,
         "url": Cypress.env('BASE_URL') + endpoint,
         "headers": {
             'Accept': 'application/json',
