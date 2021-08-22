@@ -1,4 +1,7 @@
 {
-  "space": "/space",
-  "post": "/team/{id}/space"
+  "getSpaces": "team/{id}/space",
+  "getSpace": "/space/{id}",
+  "createSpace": "/team/{id}/space",
+  "deleteSpace": "/space/{id}",
+  "updateSpace": "/space/{id}"
 }
