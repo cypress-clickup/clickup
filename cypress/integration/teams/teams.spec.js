@@ -1,22 +1,9 @@
 /// <reference types='Cypress' />
+const { getTeams } = require("@api/teams/teamsFunctions");
+// const {getTeams} = require("../../clickup/api/teams/teamsFunctions");
 
-describe('description', () => {
-
-    let listId = ''
-    before(() => {
-        getIdList().then((response) => {
-            listId = response.body.id
-        })
-    })
-
-    it.only('Verify that the request "get team" we can obtain the list of teams and members of each team', () => {
-        feature.create(`/list/${listId}/task`, spaceJson).then((response) => {
-            console.log("task", response)
-            console.log(response.body.id)
-        })
-    })
-
-    afterEach(() => {
-        deleteSpace()
-    })
-})
+describe("Temas endpoint", () => {
+  it('Verify that the request "get team" we can obtain the list of teams and members of each team', () => {
+    getTeams();
+  });
+});
