@@ -2,8 +2,10 @@
 const spaceJson = require('@fixtures/space/space.json')
 const spaceBadJson = require('@fixtures/space/space_bad_data.json')
 const spaceErrorMessage = require('@fixtures/space/space_errors.json')
-const { getSpaces,getSpace,createSpace,deleteSpace } = require('@api/spaces/spacesFunctions')
+const { getSpaces,getSpace,createSpace } = require('@api/spaces/spacesFunctions')
 const { getTeams } = require("@api/teams/teamsFunctions");
+const endpointSpace = require('@fixtures/endpoint/space.json')
+const feature = require('@api/features')
 
 describe('Test to get Spaces', () => {
 
@@ -50,6 +52,6 @@ describe('Test to get Spaces', () => {
     });
 
     after(() => {
-        deleteSpace(spaceId)
+        feature.deleteOne(endpointSpace.space, spaceId)
     })
 })

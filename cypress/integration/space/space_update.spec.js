@@ -1,14 +1,12 @@
 const feature = require('@api/features')
-const spaceJson = require('@fixtures/space/space.json')
 const endpointSpace = require('@fixtures/endpoint/space.json')
 const spaceErrorMessage = require('@fixtures/space/space_errors.json')
-const {replaceIdUrl} = require('@support/utils/replaceIdUrl')
 const spaceUpdateJson = require('@fixtures/space/space_update_data.json')
-const { getSpaces,getSpace,createSpace,deleteSpace,updateSpace } = require('@api/spaces/spacesFunctions')
+const { createSpace,updateSpace } = require('@api/spaces/spacesFunctions')
 const { getTeams } = require("@api/teams/teamsFunctions");
 const spaceBadJson = require('@fixtures/space/space_bad_data.json')
 
-describe('Create Space', () => {
+describe('Tests to update Space', () => {
 
 
     let teamId = ''

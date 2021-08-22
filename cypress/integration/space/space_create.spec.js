@@ -6,7 +6,7 @@ const endpointTeam = require('@fixtures/endpoint/team.json')
 const {replaceIdUrl} = require('@support/utils/replaceIdUrl')
 
 
-describe('Create Space', () => {
+describe('Test to Create Space', () => {
 
     let teamId = ''
     let spaceId = ''
@@ -30,7 +30,6 @@ describe('Create Space', () => {
             )
         })
     })
-
     
     it('Verify that the request "create space" and sending an object with repeat space name into the body we cannot create that space', () => {
         urlSpace = replaceIdUrl(endpointSpace.spaceById ,teamId)
