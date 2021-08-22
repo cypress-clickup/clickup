@@ -12,5 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "cypress": "^8.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@cypress/webpack-preprocessor": "^5.9.1",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.51.1"
   }
 }
