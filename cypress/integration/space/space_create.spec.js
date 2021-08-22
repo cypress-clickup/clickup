@@ -1,14 +1,12 @@
 const feature = require('@api/features')
 const spaceJson = require('@fixtures/space/space.json')
 const endpointSpace = require('@fixtures/endpoint/space.json')
-const spaceErrorMessage = require('../../fixtures/space/space_errors.json')
+const spaceErrorMessage = require('@fixtures/space/space_errors.json')
 const endpointTeam = require('@fixtures/endpoint/team.json')
-const { creatSpace } = require('@api/spaces/spacesFunctions')
-const { getTeams } = require("@api/teams/teamsFunctions");
 const {replaceIdUrl} = require('@support/utils/replaceIdUrl')
 
 
-describe('Create a Space with team', () => {
+describe('Create Space', () => {
 
     let teamId = ''
     let spaceId = ''
@@ -40,7 +38,7 @@ describe('Create a Space with team', () => {
         .then((response) => {
             console.log(response)
             expect(response.status).to.eq(400);
-            expect(response.body.err).to.be.eq(spaceErrorMessage.err);
+            expect(response.body.err).to.be.eq(spaceErrorMessage.errors.duplicate.err);
             expect(response.body).to.have.all.keys('err', 'ECODE')
         })
     })

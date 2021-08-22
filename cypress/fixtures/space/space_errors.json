@@ -1,4 +1,12 @@
 {
-    "err": "Space with this name already exists",
-    "ECODE": "PROJECT_023"
+    "errors": {
+        "duplicate": {
+            "err": "Space with this name already exists",
+            "ECODE": "PROJECT_023"
+        },
+        "authorized": {
+            "err": "Team not authorized",
+            "ECODE": "OAUTH_027"
+        }
+    }
 }

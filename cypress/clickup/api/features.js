@@ -6,7 +6,8 @@ export function getAll(endpoint) {
         "headers": {
             'Accept': 'application/json',
             'Authorization': Cypress.env('API_TOKEN')
-        }
+        },
+        "failOnStatusCode":false
     }
     return cy.request(options)
 }
@@ -18,7 +19,8 @@ export function getOne(endpoint, idObject) {
         "headers": {
             'Accept': 'application/json',
             'Authorization': Cypress.env('API_TOKEN')
-        }
+        },
+        "failOnStatusCode":false
     }
     return cy.request(options)
 }
