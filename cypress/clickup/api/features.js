@@ -43,7 +43,8 @@ export function create(endpoint, jsonData) {
             'Accept': 'application/json',
             'Authorization': Cypress.env('API_TOKEN')
         },
-        "body": jsonData
+        "body": jsonData,
+        "failOnStatusCode":false
     }
     return cy.request(options)
 }
