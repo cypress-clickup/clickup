@@ -1,5 +1,6 @@
 const feature = require('@api/features');
 const spaceJson = require('@fixtures/space/space.json')
+const spaceUpdateJson = require('@fixtures/space/space_update_data.json')
 const folderJson = require('@fixtures/folder/folder.json')
 const listJson = require('@fixtures/list/list.json')
 const endpointTeam = require('@fixtures/endpoint/team.json')
@@ -30,6 +31,12 @@ export function createSpace(teamId) {
     })
 }
 
+export function updateSpace(spaceId) {
+    return feature.put(endpointSpace.space,spaceId, spaceUpdateJson).then((response) => {
+        spaceId = response.body.id
+    })
+}
+
 export function deleteSpace(spaceId) {
-    feature.deleteOne(endpointSpace.space, spaceId)
+    return feature.deleteOne(endpointSpace.space, spaceId)
 }
