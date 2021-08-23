@@ -31,18 +31,18 @@ describe('Test to Create Task', () => {
         })
     })
 
-    it('Verify ', () => {
+    it('Verify that is possible to create a task in a list', () => {
         createTask(listId).should((response) => {
             expect(response.status).to.eq(200);
             expect(response.body.name).to.be.eq(taskJson.name);
             expect(response.body).to.have.all.keys(
                 'archived', 'assignees', 'checklists', 'creator', 'custom_fields', 'custom_id', 'date_closed', 'date_created', 'date_updated', 'dependencies',
-            'description', 'due_date', 'folder', 'id', 'linked_tasks', 'list', 'name', 'orderindex', 'parent', 'permission_level', 'points', 'priority', 'project', 'space', 'start_date', 'status', 'tags', 'team_id', 'text_content', 'time_estimate', 'time_spent', 'url', 'watchers'
-        )
+                'description', 'due_date', 'folder', 'id', 'linked_tasks', 'list', 'name', 'orderindex', 'parent', 'permission_level', 'points', 'priority', 'project', 'space', 'start_date', 'status', 'tags', 'team_id', 'text_content', 'time_estimate', 'time_spent', 'url', 'watchers'
+            )
         })
     })
 
-    it('Verify delete', () => {
+    it('Verify that is not  possible to create a task in a list', () => {
         createTask(taskBadJson.id).should((response) => {
             expect(response.status).to.eq(401);
             expect(response.body.err).to.be.eq(taskErrorMessage.errors.authorized.err);

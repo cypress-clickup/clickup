@@ -8,7 +8,7 @@ const {createFolder} = require('@api/folders/foldersFunctions')
 const {createList} = require('@api/list/listsFunctions')
 const {createTask, deleteTask} = require('@api/task/tasksFunctions')
 
-describe('Test to Create Task', () => {
+describe('Test to delete Task', () => {
 
     let teamId = ''
     let spaceId = ''
@@ -34,13 +34,13 @@ describe('Test to Create Task', () => {
         })
     })
 
-    it('Verify ', () => {
+    it('Verify that is possible to  delete a task by id', () => {
         deleteTask(taskId).should((response) => {
             expect(response.status).to.eq(200)
         })
     })
 
-    it('Verify delete', () => {
+    it('Verify that is not  possible to delete a task in a list', () => {
         deleteTask(taskBadJson.id).should((response) => {
             expect(response.status).to.eq(401);
             expect(response.body.err).to.be.eq(taskErrorMessage.errors.authorized.err);

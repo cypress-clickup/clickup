@@ -9,7 +9,7 @@ const {createFolder} = require('@api/folders/foldersFunctions')
 const {createList} = require('@api/list/listsFunctions')
 const {createTask, updateTask} = require('@api/task/tasksFunctions')
 
-describe('Test to Create Task', () => {
+describe('Test to Update Task', () => {
 
     let teamId = ''
     let spaceId = ''
@@ -35,7 +35,7 @@ describe('Test to Create Task', () => {
         })
     })
 
-    it('Verify', () => {
+    it('Verify that is possible to update a task by id', () => {
         updateTask(taskId).should((response) => {
             expect(response.status).to.eq(200)
             expect(response.body.name).to.be.eq(taskUpdateJson.name)
@@ -44,15 +44,16 @@ describe('Test to Create Task', () => {
                 'description', 'due_date', 'folder', 'id', 'linked_tasks', 'list', 'name', 'orderindex', 'parent', 'permission_level', 'points', 'priority', 'project', 'space', 'start_date', 'status', 'tags', 'team_id', 'text_content', 'time_estimate', 'time_spent', 'url', 'watchers'
             )
         })
-    });
+    })
 
-    it('Verify', () => {
+    it('Verify that is not  possible to update a task in a list', () => {
         updateTask(taskBadJson.id).should((response) => {
             expect(response.status).to.eq(401);
             expect(response.body.err).to.be.eq(taskErrorMessage.errors.authorized.err);
             expect(response.body).to.have.all.keys('err', 'ECODE')
         })
-    });
+    })
+
     after(() => {
         feature.deleteOne(endpointSpace.space, spaceId)
     })
