@@ -1,6 +1,7 @@
 const {createListAsPreRequisite, deleteList} = require("../../clickup/api/list/listFunctions");
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
 const listErrorMessage = require("../../fixtures/list/listErrors.json");
+const listBadData = require("../../fixtures/list/listBadData.json");
 
 describe('delete a list', () => {
     let spaceId = ''
@@ -22,7 +23,7 @@ describe('delete a list', () => {
     })
 
     it('Verify a list cannot be deleted in another’s team space', () => {
-        deleteList(listId)
+        deleteList(listBadData.id)
             .should((response) => {
                 expect(response.status).to.eq(401);
                 expect(response.body.err).to.be.eq(listErrorMessage.errors.authorized.err);
