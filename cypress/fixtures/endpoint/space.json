@@ -1,4 +1,6 @@
 {
-  "space":"/space",
+  "space": "/space",
+  "post": "/team/{id}/space",
+  "spaces": "/team/{id}/space",
   "spaceById": "/team/{id}/space"
 }
