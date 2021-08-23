@@ -1,5 +1,6 @@
 {
   "list": "/list",
+  "listById": "/folder/{id}/list",
   "lists": "/folder/{id}/list",
   "folderLessLists": "/space/{id}/list",
   "taskInList": "/list/{firstId}/task/{secondId}"
