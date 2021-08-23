@@ -4,7 +4,6 @@ const { getTeams } = require("@api/teams/teamsFunctions");
 const folderBadJson = require('@fixtures/folder/folder_bad_data.json')
 const { createFolder,deleteFolder } = require('@api/folders/foldersFunctions')
 
-
 describe('Tests to delete Spaces', () => {
 
     let teamId = ''
