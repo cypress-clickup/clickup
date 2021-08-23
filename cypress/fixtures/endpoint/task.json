@@ -1,10 +1,7 @@
 {
-  "task": "/task/{id}/",
-  "tasks": "/list/{id}/task",
+  "task": "/task",
+  "taskById": "/list/{id}/task",
   "getFiltered": "/team/{id}/task/",
   "getTime": "/task/{id}/time_in_status/",
-  "getTimes": "/task/bulk_time_in_status/task_ids/",
-  "post": "/list/{id}/task",
-  "put": "/task/{id}/",
-  "delete": "/task/{id}/"
+  "getTimes": "/task/bulk_time_in_status/task_ids/"
 }
