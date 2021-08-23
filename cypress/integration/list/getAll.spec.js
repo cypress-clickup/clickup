@@ -2,11 +2,11 @@ const {createListAsPreRequisite, getLists} = require("../../clickup/api/list/lis
 const listJson = require("../../fixtures/list/list.json");
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
 
-describe('get a list', () => {
+describe('get all lists', () => {
     let spaceId = ''
     let folderId = ''
     let listId = ''
-    beforeEach(() => {
+    before(() => {
         createListAsPreRequisite().then((ids) => {
             spaceId = ids.spaceId
             folderId = ids.folderId
@@ -14,7 +14,7 @@ describe('get a list', () => {
         })
     })
 
-    it('should get a list', () => {
+    it('Verify that it can be possible to get all existing lists', () => {
         getLists(folderId)
             .should((response) => {
                 expect(response.status).to.eq(200)
@@ -22,7 +22,10 @@ describe('get a list', () => {
             })
     })
 
-    afterEach(() => {
+    it('', () => {
+    })
+
+    after(() => {
         deleteSpace(spaceId)
     })
 })

@@ -1,12 +1,13 @@
 const listJson = require("../../fixtures/list/list.json");
 const {createListAsPreRequisite, updateList} = require("../../clickup/api/list/listFunctions");
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
+const listErrorMessage = require("../../fixtures/list/listErrors.json");
 
 describe('update a list', () => {
     let spaceId = ''
     let folderId = ''
     let listId = ''
-    beforeEach(() => {
+    before(() => {
         createListAsPreRequisite().then((ids) => {
             spaceId = ids.spaceId
             folderId = ids.folderId
@@ -14,7 +15,7 @@ describe('update a list', () => {
         })
     })
 
-    it('should update a list', () => {
+    it('Verify that, is can be possible to update a list', () => {
         updateList(listId)
             .should((response) => {
                 expect(response.status).to.eq(200)
@@ -22,7 +23,15 @@ describe('update a list', () => {
             })
     })
 
-    afterEach(() => {
+    it('Verify a list cannot be updated in another’s team space', () => {
+        updateList(listId)
+            .should((response) => {
+                expect(response.status).to.eq(401);
+                expect(response.body.err).to.be.eq(listErrorMessage.errors.authorized.err);
+            })
+    })
+
+    after(() => {
         deleteSpace(spaceId)
     })
 })
