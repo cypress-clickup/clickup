@@ -7,6 +7,10 @@
     "authorized": {
       "err": "Team not authorized",
       "ECODE": "OAUTH_027"
+    },
+    "notFound": {
+      "err": "Not Found",
+      "ECODE": "OAUTH_121"
     }
   }
 }

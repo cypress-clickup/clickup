@@ -42,7 +42,7 @@ describe('Test to Create Task', () => {
         })
     })
 
-    it.only('Verify delete', () => {
+    it('Verify delete', () => {
         createTask(taskBadJson.id).should((response) => {
             expect(response.status).to.eq(401);
             expect(response.body.err).to.be.eq(taskErrorMessage.errors.authorized.err);
