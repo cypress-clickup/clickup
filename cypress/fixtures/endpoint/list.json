@@ -1,4 +1,5 @@
 {
   "list": "/list",
-  "post": "/folder/{id}/list"
+  "lists": "/folder/{id}/list",
+  "folderLessLists": "/space/{id}/list"
 }
