@@ -1,0 +1,12 @@
+{
+  "errors": {
+    "authorized": {
+      "err": "Team not authorized",
+      "ECODE": "OAUTH_027"
+    },
+    "list": {
+      "notFound": "List not found",
+      "notAvailable": "Time In Status is not available on your Plan"
+    }
+  }
+}

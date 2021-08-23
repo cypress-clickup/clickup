@@ -1,4 +1,4 @@
-const {getIdList, deleteSpace} = require("../../clickup/api/task/taskFunctions");
+const {getIdList, deleteSpace} = require("../../clickup/api/task/tasksFunctions");
 const feature = require("../../clickup/api/features");
 const spaceJson = require("../../fixtures/space/space.json");
 
