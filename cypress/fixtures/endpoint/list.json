@@ -1,4 +1,13 @@
 {
   "list": "/list",
-  "post": "/folder/{id}/list"
+
+  "post": "/folder/{id}/list",
+  "postFolderLess": "/space/{id}/list",
+  "put": "/list/{id}",
+  "delete": "/list/{id}/",
+  "lists": "/folder/{id}/list",
+  "folderLessLists": "/space/{id}/list",
+  "getList": "/list/{id}",
+  "taskToList": "/list/{id}/task/task_id",
+  "removeTask": "/list/{id}/task/task_id"
 }
