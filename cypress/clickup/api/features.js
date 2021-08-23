@@ -66,3 +66,19 @@ export function put(endpoint, idObject, jsonData) {
     }
     return cy.request(options)
 }
+
+export function sendRequest(method, endpoint, jsonData) {
+    const options =  {
+        "method": method,
+        "url": Cypress.env('BASE_URL') + endpoint,
+        "headers": {
+            'Accept': 'application/json',
+            'Authorization': Cypress.env('API_TOKEN')
+        },
+        "failOnStatusCode":false
+    }
+    if (jsonData !== undefined) {
+        options["body"] = jsonData
+    }
+    return cy.request(options)
+}
