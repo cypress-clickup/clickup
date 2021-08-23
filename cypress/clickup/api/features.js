@@ -6,7 +6,8 @@ export function getAll(endpoint) {
         "headers": {
             'Accept': 'application/json',
             'Authorization': Cypress.env('API_TOKEN')
-        }
+        },
+        "failOnStatusCode":false
     }
     return cy.request(options)
 }
@@ -18,7 +19,8 @@ export function getOne(endpoint, idObject) {
         "headers": {
             'Accept': 'application/json',
             'Authorization': Cypress.env('API_TOKEN')
-        }
+        },
+        "failOnStatusCode":false
     }
     return cy.request(options)
 }
@@ -30,7 +32,8 @@ export function deleteOne(endpoint, idObject) {
         "headers": {
             'Accept': 'application/json',
             'Authorization': Cypress.env('API_TOKEN')
-        }
+        },
+        "failOnStatusCode":false
     }
     return cy.request(options)
 }
@@ -43,20 +46,22 @@ export function create(endpoint, jsonData) {
             'Accept': 'application/json',
             'Authorization': Cypress.env('API_TOKEN')
         },
-        "body": jsonData
+        "body": jsonData,
+        "failOnStatusCode":false
     }
     return cy.request(options)
 }
 
-export function put(endpoint, jsonData) {
+export function put(endpoint, idObject, jsonData) {
     const options = {
         "method": methods.PUT,
-        "url": Cypress.env('BASE_URL') + endpoint,
+        "url": Cypress.env('BASE_URL') + endpoint + '/' + idObject,
         "headers": {
             'Accept': 'application/json',
             'Authorization': Cypress.env('API_TOKEN')
         },
-        "body": jsonData
+        "body": jsonData,
+        "failOnStatusCode":false
     }
     return cy.request(options)
 }

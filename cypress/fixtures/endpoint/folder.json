@@ -1,5 +1,6 @@
 {
   "folder": "/folder",
   "post": "/space/{id}/folder",
-  "folders": "/space/{id}/folder"
+  "folders": "/space/{id}/folder",
+  "folderById": "/space/{id}/folder"
 }
