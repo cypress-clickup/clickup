@@ -1,0 +1,12 @@
+{
+    "errors": {
+        "duplicate": {
+            "err": "Folder name taken",
+            "ECODE": "PROJECT_023"
+        },
+        "authorized": {
+            "err": "Team not authorized",
+            "ECODE": "OAUTH_027"
+        }
+    }
+}
