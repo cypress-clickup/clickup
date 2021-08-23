@@ -1,11 +1,8 @@
-const feature = require('@api/features')
 const folderJson = require('@fixtures/folder/folder.json')
-const endpointSpace = require('@fixtures/endpoint/space.json')
 const folderErrorMessage = require('@fixtures/folder/folder_errors.json')
-const { createSpace  } = require('@api/spaces/spacesFunctions')
+const { createSpace,deleteSpace  } = require('@api/spaces/spacesFunctions')
 const { createFolder } = require('@api/folders/foldersFunctions')
 const { getTeams } = require("@api/teams/teamsFunctions");
-
 
 describe('Test to Create Folder', () => {
 
@@ -15,17 +12,13 @@ describe('Test to Create Folder', () => {
     before(() => {
         getTeams().then((response)=>{
             teamId = response.body.teams[0].id
-            createSpace(teamId).then((response)=>{
-                console.log(response)
-                spaceId = response.body.id            
-            }) 
+            createSpace(teamId).then((response)=>spaceId = response.body.id) 
         })   
     })
 
-    it('Verify that the request "create folder" and sending a space_id and object with folder name into the body we can create a new folder ', () => {
-        createFolder(spaceId).then((response) => {
+    it('Verify a new folder can be created only with name', () => {
+        createFolder(spaceId).should((response)=>{
             folderId = response.body.id
-        }).should((response)=>{
             expect(response.status).to.eq(200);
             expect(response.body.name).to.be.eq(folderJson.name);
             expect(response.body).to.have.all.keys(
@@ -34,10 +27,8 @@ describe('Test to Create Folder', () => {
         })
     })
     
-    it('Verify that the request "create folder" and sending a space_id and object with a repeat folder name into the body we cannot create a new folder ', () => {
-        createFolder(spaceId)
-        .then((response) => {
-            console.log(response)
+    it('Verify a new folder cannot be created with the same name as another inside the same space', () => {
+        createFolder(spaceId).should((response) => {
             expect(response.status).to.eq(400);
             expect(response.body.err).to.be.eq(folderErrorMessage.errors.duplicate.err);
             expect(response.body).to.have.all.keys('err', 'ECODE')
@@ -45,6 +36,6 @@ describe('Test to Create Folder', () => {
     })
 
     after(() => {
-        feature.deleteOne(endpointSpace.space, spaceId)
+        deleteSpace(spaceId)
     })
 })

@@ -1,4 +1,5 @@
-const methods = require('../../fixtures/endpoint/methods.json');
+const methods = require('@fixtures/endpoint/methods.json');
+
 export function getAll(endpoint) {
     const options = {
         "method": methods.GET,
