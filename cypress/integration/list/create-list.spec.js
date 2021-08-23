@@ -1,20 +1,20 @@
-const feature = require("../../clickup/api/features");
 const listJson = require("../../fixtures/list/list.json");
-const {createFolder} = require("../../clickup/api/list/prerequisites-list");
+const {createFolderAsPreRequisite, createList} = require("../../clickup/api/list/listFunctions");
+const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
 
 describe('create a list', () => {
     let spaceId = ''
     let folderId = ''
     beforeEach(() => {
-        createFolder().then((ids) => {
+        createFolderAsPreRequisite().then((ids) => {
             spaceId = ids.spaceId
             folderId = ids.folderId
         })
     })
 
     it('should create a list', () => {
-        feature.create(`/folder/${folderId}/list`, listJson)
-            .then((response) => {
+        createList(folderId)
+            .should((response) => {
                 expect(response.status).to.eq(200)
                 expect(response.body.name).to.eq(listJson.name)
                 return response.body.id
@@ -22,6 +22,6 @@ describe('create a list', () => {
     })
 
     afterEach(() => {
-        feature.deleteOne('/space', spaceId)
+        deleteSpace(spaceId)
     })
 })
