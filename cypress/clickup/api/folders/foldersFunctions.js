@@ -4,31 +4,20 @@ const folderJson = require('@fixtures/folder/folder.json')
 const endpointFolder = require('@fixtures/endpoint/folder.json')
 const {replaceIdUrl} = require('@support/utils/replaceIdUrl')
 
-let spaceUrl = ''
-
 export function getFolders(spaceId) {
-    return feature.getAll(replaceIdUrl(endpointFolder.folderById,spaceId)).then((response) => {
-        spaceId = response.body.id
-    })
+    return feature.getAll(replaceIdUrl(endpointFolder.folderById,spaceId))
 }
 
 export function getFolder(folderId) {
-    return feature.getOne(endpointFolder.folder,folderId).then((response) => {
-        folderId = response.body.id
-    })
+    return feature.getOne(endpointFolder.folder,folderId)
 }
 
 export function createFolder(spaceId) {
-    spaceUrl = replaceIdUrl(endpointFolder.folderById ,spaceId)
-    return feature.create(spaceUrl, folderJson).then((response) => {
-        spaceId = response.body.id
-    })
+    return feature.create(replaceIdUrl(endpointFolder.folderById ,spaceId), folderJson)
 }
 
 export function updateFolder(folderId) {
-    return feature.put(endpointFolder.folder,folderId, folderUpdateJson).then((response) => {
-        spaceId = response.body.id
-    })
+    return feature.put(endpointFolder.folder,folderId, folderUpdateJson)
 }
 
 export function deleteFolder(folderId) {

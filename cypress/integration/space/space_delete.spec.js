@@ -11,20 +11,17 @@ describe('Tests to delete Spaces', () => {
     before(() => {
         getTeams().then((response)=>{
             teamId = response.body.teams[0].id
-            createSpace(teamId).then((response) => {
-                console.log(response)
-                spaceId = response.body.id
-            }) 
+            createSpace(teamId).then((response) => spaceId = response.body.id) 
         })   
     })
 
-    it('Verify that the request "delete space" and sending a space_id we can delete a specific space', () => {
+    it('Verify that  it can be possible to delete a specific space', () => {
         deleteSpace(spaceId).should((response)=>{
             expect(response.status).to.eq(200)
         })
     });
 
-    it('Verify that the request " delete space" and sending a bad space_id we cannot delete any space', () => {
+    it('Verify a space cannot be created in another’s team space', () => {
         deleteSpace(spaceBadJson.id).should((response)=>{
             expect(response.status).to.eq(401);
             expect(response.body.err).to.be.eq(spaceErrorMessage.errors.authorized.err);

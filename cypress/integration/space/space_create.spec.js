@@ -15,12 +15,9 @@ describe('Test to Create Space', () => {
         .then((response) => teamId = response.body.teams[0].id)
     })
 
-    it('Verify that the request "create space" and sending an object with the space name into the body we can create a space', () => {
-        createSpace(teamId)
-        .then((response)=>{
-            console.log(response)
-            spaceid = response.body.id
-            console.log(spaceId)
+    it('Verify a space can be created only with name', () => {
+        createSpace(teamId).should((response)=>{
+            spaceId = response.body.id
             expect(response.status).to.eq(200);
             expect(response.body.name).to.be.eq(spaceJson.name);
             expect(response.body).to.have.all.keys(
@@ -29,18 +26,15 @@ describe('Test to Create Space', () => {
         })
     })
     
-    it('Verify that the request "create space" and sending an object with repeat space name into the body we cannot create that space', () => {
-        createSpace(teamId)
-        .then((response) => {
+    it('Verify a new space cannot be created with the same name of another inside the same space', () => {
+        createSpace(teamId).should((response) => {
             expect(response.status).to.eq(400);
             expect(response.body.err).to.be.eq(spaceErrorMessage.errors.duplicate.err);
             expect(response.body).to.have.all.keys('err', 'ECODE')
         })
     })
 
-    after(() => {
-        console.log(spaceId)
-        feature.deleteOne(endpointSpace.space, spaceId)
-        // deleteSpace(spaceId)
+    after(() => {     
+        deleteSpace(spaceId)
     })
 })
