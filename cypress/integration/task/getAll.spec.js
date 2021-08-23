@@ -9,7 +9,7 @@ const {createFolder} = require('@api/folders/foldersFunctions')
 const {createList} = require('@api/list/listsFunctions')
 const {createTask, getTasks} = require('@api/task/tasksFunctions')
 
-describe('Test to Create Task', () => {
+describe('Test to get Tasks', () => {
 
     let teamId = ''
     let spaceId = ''
@@ -35,7 +35,7 @@ describe('Test to Create Task', () => {
         })
     })
 
-    it('Verify that ', () => {
+    it('Verify that is possible to get a list of tasks', () => {
         getTasks(listId).should((response) => {
             expect(response.status).to.eq(200);
             expect(response.body.tasks.length).to.be.eq(1);
@@ -47,7 +47,7 @@ describe('Test to Create Task', () => {
         })
     })
 
-    it('Verify', () => {
+    it('Verify a task cannot be obtain in another’s team space', () => {
         getTasks(taskBadJson.id).should((response) => {
             expect(response.status).to.eq(404);
             expect(response.body.err).to.be.eq(taskErrorMessage.errors.list.notFound);

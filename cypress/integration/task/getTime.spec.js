@@ -8,7 +8,7 @@ const {createFolder} = require('@api/folders/foldersFunctions')
 const {createList} = require('@api/list/listsFunctions')
 const {createTask, getTime} = require('@api/task/tasksFunctions')
 
-describe('Test to Create Task', () => {
+describe('Test to Time of a Task', () => {
 
     let teamId = ''
     let spaceId = ''
@@ -34,7 +34,7 @@ describe('Test to Create Task', () => {
         })
     })
 
-    it('Verify', () => {
+    it('Verify that is possible to get time in the status of a task', () => {
         getTime(taskId).should((response) => {
             expect(response.status).to.eq(403);
             expect(response.body.err).to.be.eq(taskErrorMessage.errors.list.notAvailable);
@@ -42,7 +42,7 @@ describe('Test to Create Task', () => {
         })
     })
 
-    it('Verify', () => {
+    it('Verify that is not  possible to get status of a task  in another’s team space', () => {
         getTime(taskBadJson.id).should((response) => {
             expect(response.status).to.eq(401);
             expect(response.body.err).to.be.eq(taskErrorMessage.errors.authorized.err);
