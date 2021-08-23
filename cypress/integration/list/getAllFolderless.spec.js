@@ -2,24 +2,27 @@ const {createFolderLessListAsPreRequisite, getFolderLessList} = require("../../c
 const listJson = require("../../fixtures/list/list.json");
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
 
-describe('get a folder less list', () => {
+describe('get all folder less lists', () => {
     let spaceId = ''
     let listId = ''
-    beforeEach(() => {
+    before(() => {
         createFolderLessListAsPreRequisite().then((ids) => {
             spaceId = ids.spaceId
             listId = ids.listId
         })
     })
 
-    it('should get a folder less list', () => {
+    it('Verify that it can be possible to get information about all folders lists', () => {
         getFolderLessList(spaceId)
             .should((response) => {
                 expect(response.status).to.eq(200)
             })
     })
 
-    afterEach(() => {
+    it('', () => {
+    })
+
+    after(() => {
         deleteSpace(spaceId)
     })
 })
