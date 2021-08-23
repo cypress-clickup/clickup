@@ -1,8 +1,6 @@
-const feature = require('@api/features')
-const endpointSpace = require('@fixtures/endpoint/space.json')
 const folderErrorMessage = require('@fixtures/folder/folder_errors.json')
 const folderUpdateJson = require('@fixtures/folder/folder_update_data.json')
-const { createSpace } = require('@api/spaces/spacesFunctions')
+const { createSpace,deleteSpace } = require('@api/spaces/spacesFunctions')
 const { getTeams } = require("@api/teams/teamsFunctions");
 const spaceBadJson = require('@fixtures/space/space_bad_data.json')
 const { createFolder,updateFolder } = require('@api/folders/foldersFunctions')
@@ -17,17 +15,13 @@ describe('Tests to update Space', () => {
         getTeams().then((response)=>{
             teamId = response.body.teams[0].id
             createSpace(teamId).then((response)=>{
-                console.log(response)
                 spaceId = response.body.id
-                createFolder(spaceId).then((response)=>{
-                    console.log(response)
-                    folderId = response.body.id
-                })
+                createFolder(spaceId).then((response)=>folderId = response.body.id)
             }) 
         })   
     })
 
-    it('Verify that the request "update folder" and sending a folder_id and we can update its information ', () => {
+    it('Verify a folder can be updated', () => {
         updateFolder(folderId).should((response)=>{
             expect(response.status).to.eq(200)
             expect(response.body.name).to.be.eq(folderUpdateJson.name)
@@ -37,7 +31,7 @@ describe('Tests to update Space', () => {
         })
     });
 
-    it('Verify that the request "update folder" and sending a bad folder_id and we cannot update any information ', () => {
+    it('Verify a folder cannot be updated in another’s team space', () => {
         updateFolder(spaceBadJson.id).should((response)=>{
             expect(response.status).to.eq(401);
             expect(response.body.err).to.be.eq(folderErrorMessage.errors.authorized.err);
@@ -46,6 +40,6 @@ describe('Tests to update Space', () => {
     });
 
     after(() => {
-        feature.deleteOne(endpointSpace.space, spaceId)
+        deleteSpace(spaceId)
     })
 })

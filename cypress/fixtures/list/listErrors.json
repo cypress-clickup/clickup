@@ -1,0 +1,16 @@
+{
+  "errors": {
+    "duplicate": {
+      "err": "List name taken",
+      "ECODE": "PROJECT_023"
+    },
+    "authorized": {
+      "err": "Team not authorized",
+      "ECODE": "OAUTH_027"
+    },
+    "notFound": {
+      "err": "Not Found",
+      "ECODE": "OAUTH_121"
+    }
+  }
+}

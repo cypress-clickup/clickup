@@ -1,11 +1,10 @@
-const {createListAsPreRequisite, deleteList} = require("../../clickup/api/list/listFunctions");
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
-
-describe('test a endpoint a list', () => {
+const {createListAsPreRequisite} = require("../../clickup/api/list/listFunctions");
+describe('remove a task from a list', () => {
     let spaceId = ''
     let folderId = ''
     let listId = ''
-    beforeEach(() => {
+    before(() => {
         createListAsPreRequisite().then((ids) => {
             spaceId = ids.spaceId
             folderId = ids.folderId
@@ -13,14 +12,10 @@ describe('test a endpoint a list', () => {
         })
     })
 
-    it('requisites', () => {
-        deleteList(listId)
-            .should((response) => {
-                expect(response.status).to.eq(200)
-            })
+    it('Verify that a task can be removed from a list', () => {
     })
 
-    afterEach(() => {
+    after(() => {
         deleteSpace(spaceId)
     })
 })

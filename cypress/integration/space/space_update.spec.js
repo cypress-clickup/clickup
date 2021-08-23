@@ -1,13 +1,10 @@
-const feature = require('@api/features')
-const endpointSpace = require('@fixtures/endpoint/space.json')
 const spaceErrorMessage = require('@fixtures/space/space_errors.json')
 const spaceUpdateJson = require('@fixtures/space/space_update_data.json')
-const { createSpace,updateSpace } = require('@api/spaces/spacesFunctions')
+const { createSpace,updateSpace,deleteSpace } = require('@api/spaces/spacesFunctions')
 const { getTeams } = require("@api/teams/teamsFunctions");
 const spaceBadJson = require('@fixtures/space/space_bad_data.json')
 
 describe('Tests to update Space', () => {
-
 
     let teamId = ''
     let spaceId = ''
@@ -15,14 +12,11 @@ describe('Tests to update Space', () => {
     before(() => {
         getTeams().then((response)=>{
             teamId = response.body.teams[0].id
-            createSpace(teamId).then((response) => {
-                console.log(response)
-                spaceId = response.body.id
-            }) 
+            createSpace(teamId).then((response) => spaceId = response.body.id) 
         })   
     })
 
-    it('Verify that the request "update space" and sending a space_id we can updated the information only about that specific space', () => {
+    it('Verify a space can be updated with a name', () => {
         updateSpace(spaceId).should((response)=>{
             expect(response.status).to.eq(200)
             expect(response.body.name).to.be.eq(spaceUpdateJson.name)
@@ -32,7 +26,7 @@ describe('Tests to update Space', () => {
         })
     });
 
-    it('Verify that the request "update space" and sending a bad space_id we cannot updated the information only about that specific space', () => {
+    it('Verify a space cannot be updated in another team space', () => {
         updateSpace(spaceBadJson.id).should((response)=>{
             expect(response.status).to.eq(401);
             expect(response.body.err).to.be.eq(spaceErrorMessage.errors.authorized.err);
@@ -41,6 +35,6 @@ describe('Tests to update Space', () => {
     });
 
     after(() => {
-        feature.deleteOne(endpointSpace.space, spaceId)
+        deleteSpace(spaceId)
     })
 })

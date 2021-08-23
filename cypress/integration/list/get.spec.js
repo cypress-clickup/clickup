@@ -1,12 +1,14 @@
 const {createListAsPreRequisite, getList} = require("../../clickup/api/list/listFunctions");
 const listJson = require("../../fixtures/list/list.json");
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
+const listErrorMessage = require("../../fixtures/list/listErrors.json");
+const listBadData = require("../../fixtures/list/listBadData.json");
 
 describe('get a list', () => {
     let spaceId = ''
     let folderId = ''
     let listId = ''
-    beforeEach(() => {
+    before(() => {
         createListAsPreRequisite().then((ids) => {
             spaceId = ids.spaceId
             folderId = ids.folderId
@@ -14,7 +16,7 @@ describe('get a list', () => {
         })
     })
 
-    it('should get a list', () => {
+    it('Verify that it can be possible to get information about a specific list', () => {
         getList(listId)
             .should((response) => {
                 expect(response.status).to.eq(200)
@@ -22,7 +24,15 @@ describe('get a list', () => {
             })
     })
 
-    afterEach(() => {
+    it('Verify a list cannot be get information in another’s team space', () => {
+        getList(listBadData.id)
+            .should((response) => {
+                expect(response.status).to.eq(401);
+                expect(response.body.err).to.be.eq(listErrorMessage.errors.authorized.err);
+            })
+    })
+
+    after(() => {
         deleteSpace(spaceId)
     })
 })

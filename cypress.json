@@ -2,5 +2,12 @@
   "env": {
     "BASE_URL": "https://api.clickup.com/api/v2"
   },
-  "watchForFileChanges": false
+  "watchForFileChanges": false,
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "overwrite": false,
+    "html": false,
+    "json": true
+  },
+  "video": false
 }
