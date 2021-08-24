@@ -1,9 +1,12 @@
 const folderErrorMessage = require('@fixtures/folder/folder_errors.json')
 const folderUpdateJson = require('@fixtures/folder/folder_update_data.json')
-const { createSpace,deleteSpace } = require('@api/spaces/spacesFunctions')
-const { getTeams } = require("@api/teams/teamsFunctions");
 const spaceBadJson = require('@fixtures/space/space_bad_data.json')
-const { createFolder,updateFolder } = require('@api/folders/foldersFunctions')
+const {replaceIdUrl} = require('@support/utils/replaceIdUrl')
+const methods = require('@fixtures/endpoint/methods.json');
+const { createFolderAsPreRequisiteGetListIds } = require('@api/prerequisites')
+const endpointSpace = require('@fixtures/endpoint/space.json')
+const {sendRequest} = require("@api/features");
+const endpointFolder = require('@fixtures/endpoint/folder.json')
 
 describe('Tests to update Space', () => {
 
@@ -12,17 +15,16 @@ describe('Tests to update Space', () => {
     let folderId = ''
 
     before(() => {
-        getTeams().then((response)=>{
-            teamId = response.body.teams[0].id
-            createSpace(teamId).then((response)=>{
-                spaceId = response.body.id
-                createFolder(spaceId).then((response)=>folderId = response.body.id)
-            }) 
-        })   
+        createFolderAsPreRequisiteGetListIds().then((ids) => {
+            spaceId = ids.spaceId
+            teamId = ids.teamId
+            folderId = ids.folderId
+        })    
     })
 
     it('Verify a folder can be updated', () => {
-        updateFolder(folderId).should((response)=>{
+        sendRequest(methods.PUT,replaceIdUrl(endpointFolder.folderId,folderId), folderUpdateJson)
+        .should((response)=>{
             expect(response.status).to.eq(200)
             expect(response.body.name).to.be.eq(folderUpdateJson.name)
             expect(response.body).to.have.all.keys(
@@ -32,7 +34,8 @@ describe('Tests to update Space', () => {
     });
 
     it('Verify a folder cannot be updated in another’s team space', () => {
-        updateFolder(spaceBadJson.id).should((response)=>{
+        sendRequest(methods.PUT,replaceIdUrl(endpointFolder.folderId,spaceBadJson.id), folderUpdateJson)
+        .should((response)=>{
             expect(response.status).to.eq(401);
             expect(response.body.err).to.be.eq(folderErrorMessage.errors.authorized.err);
             expect(response.body).to.have.all.keys('err', 'ECODE')
@@ -40,6 +43,6 @@ describe('Tests to update Space', () => {
     });
 
     after(() => {
-        deleteSpace(spaceId)
+         sendRequest(methods.DELETE,replaceIdUrl(endpointSpace.spaceid, spaceId))
     })
 })

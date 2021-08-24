@@ -1,4 +1,5 @@
 {
   "folder": "/folder",
+  "folderId": "/folder/{id}",
   "folderById": "/space/{id}/folder"
 }

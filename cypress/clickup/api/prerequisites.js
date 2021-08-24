@@ -33,6 +33,23 @@ export function createSpaceAsPreRequisiteGetListIds() {
     })
 }
 
+export function createFolderAsPreRequisiteGetListIds() {
+    let ids = {}
+    return createSpaceAsPreRequisiteGetListIds()
+        .then((id)=>{
+            console.log(id)
+            ids.teamId = id.teamId
+            ids.spaceId = id.spaceId
+            return ids
+        }).then((id) => {
+            sendRequest(methods.POST, replaceIdUrl(endpointFolder.folderById ,id.spaceId), folderJson)
+        }).then((response) => {
+            ids.folderId = response.body.id
+            return ids
+        })
+}
+
+
 export function createFolderAsPreRequisite() {
     let ids = {}
     return createSpaceAsPreRequisite()

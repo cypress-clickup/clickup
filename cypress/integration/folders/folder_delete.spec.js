@@ -1,8 +1,11 @@
 const spaceErrorMessage = require('@fixtures/space/space_errors.json')
-const { createSpace,deleteSpace } = require('@api/spaces/spacesFunctions')
-const { getTeams } = require("@api/teams/teamsFunctions");
 const folderBadJson = require('@fixtures/folder/folder_bad_data.json')
-const { createFolder,deleteFolder } = require('@api/folders/foldersFunctions')
+const {replaceIdUrl} = require('@support/utils/replaceIdUrl')
+const methods = require('@fixtures/endpoint/methods.json');
+const { createFolderAsPreRequisiteGetListIds } = require('@api/prerequisites')
+const folderEndpoint = require('@fixtures/endpoint/folder.json')
+const endpointSpace = require('@fixtures/endpoint/space.json')
+const {sendRequest} = require("@api/features");
 
 describe('Tests to delete Spaces', () => {
 
@@ -11,23 +14,23 @@ describe('Tests to delete Spaces', () => {
     let folderId = ''
 
     before(() => {
-        getTeams().then((response)=>{
-            teamId = response.body.teams[0].id
-            createSpace(teamId).then((response)=>{
-                spaceId = response.body.id
-                createFolder(spaceId).then((response) => folderId = response.body.id)
-            }) 
-        })   
+        createFolderAsPreRequisiteGetListIds().then((ids) => {
+            spaceId = ids.spaceId
+            teamId = ids.teamId
+            folderId = ids.folderId
+        })    
     })
 
     it('Verify a folder can be deleted', () => {
-        deleteFolder(folderId).should((response)=>{
+        sendRequest(methods.DELETE,replaceIdUrl(folderEndpoint.folderId, folderId))
+        .should((response)=>{
             expect(response.status).to.eq(200)
         })
     });
 
     it('Verify a folder cannot be created in another team space', () => {
-        deleteFolder(folderBadJson.id).should((response)=>{
+        sendRequest(methods.DELETE,replaceIdUrl(folderEndpoint.folderId, folderBadJson.id))
+        .should((response)=>{
             expect(response.status).to.eq(401);
             expect(response.body.err).to.be.eq(spaceErrorMessage.errors.authorized.err);
             expect(response.body).to.have.all.keys('err', 'ECODE')
@@ -35,6 +38,6 @@ describe('Tests to delete Spaces', () => {
     });
 
     after(() => {
-        deleteSpace(spaceId)
+        sendRequest(methods.DELETE,replaceIdUrl(endpointSpace.spaceid, spaceId))
     })
 })
