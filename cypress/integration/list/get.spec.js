@@ -1,8 +1,9 @@
-const {createListAsPreRequisite, getList} = require("../../clickup/api/list/listFunctions");
+const {getList} = require("../../clickup/api/list/listFunctions");
 const listJson = require("../../fixtures/list/list.json");
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
 const listErrorMessage = require("../../fixtures/list/listErrors.json");
 const listBadData = require("../../fixtures/list/listBadData.json");
+const {createListAsPreRequisite} = require("../../clickup/api/prerequisites");
 
 describe('get a list', () => {
     let spaceId = ''

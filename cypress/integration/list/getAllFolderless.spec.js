@@ -1,6 +1,7 @@
-const {createFolderLessListAsPreRequisite, getFolderLessList} = require("../../clickup/api/list/listFunctions");
+const {getFolderLessList} = require("../../clickup/api/list/listFunctions");
 const listJson = require("../../fixtures/list/list.json");
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
+const {createFolderLessListAsPreRequisite} = require("../../clickup/api/prerequisites");
 
 describe('get all folder less lists', () => {
     let spaceId = ''

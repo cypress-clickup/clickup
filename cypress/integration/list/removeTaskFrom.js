@@ -1,5 +1,5 @@
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
-const {createListAsPreRequisite} = require("../../clickup/api/list/listFunctions");
+const {createListAsPreRequisite} = require("../../clickup/api/prerequisites");
 describe('remove a task from a list', () => {
     let spaceId = ''
     let folderId = ''
