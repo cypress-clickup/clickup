@@ -1,23 +1,19 @@
 const spaceErrorMessage = require('@fixtures/space/space_errors.json')
-const spaceJson = require('@fixtures/space/space.json')
 const spaceBadJson = require('@fixtures/space/space_bad_data.json')
-const endpointTeam = require('@fixtures/endpoint/team.json')
 const endpointSpace = require('@fixtures/endpoint/space.json')
 const {sendRequest} = require("@api/features");
 const {replaceIdUrl} = require('@support/utils/replaceIdUrl')
 const methods = require('@fixtures/endpoint/methods.json');
+const { createSpaceAsPreRequisite } = require('@api/prerequisites')
 
 describe('Tests to delete Spaces', () => {
 
-    let teamId = ''
     let spaceId = ''
 
     before(() => {
-        sendRequest(methods.GET,endpointTeam.team).then((response) => {
-            teamId = response.body.teams[0].id
-            sendRequest(methods.POST,replaceIdUrl(endpointSpace.spaceById ,teamId),spaceJson)
-                .then((response) => spaceId = response.body.id) 
-        })   
+         createSpaceAsPreRequisite().then((id) => {
+            spaceId = id
+        }) 
     })
 
     it('Verify that  it can be possible to delete a specific space', () => {

@@ -1,9 +1,7 @@
-const feature = require('@api/features')
 const spaceJson = require('@fixtures/space/space.json')
 const endpointSpace = require('@fixtures/endpoint/space.json')
 const spaceErrorMessage = require('@fixtures/space/space_errors.json')
 const endpointTeam = require('@fixtures/endpoint/team.json')
-const { createSpace,deleteSpace } = require('@api/spaces/spacesFunctions')
 const {sendRequest} = require("@api/features");
 const {replaceIdUrl} = require('@support/utils/replaceIdUrl')
 const methods = require('@fixtures/endpoint/methods.json');

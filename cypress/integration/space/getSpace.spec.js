@@ -2,13 +2,11 @@
 const spaceJson = require('@fixtures/space/space.json')
 const spaceBadJson = require('@fixtures/space/space_bad_data.json')
 const spaceErrorMessage = require('@fixtures/space/space_errors.json')
-const { getSpaces,getSpace,createSpace,deleteSpace } = require('@api/spaces/spacesFunctions')
-const { getTeams } = require("@api/teams/teamsFunctions");
-const endpointTeam = require('@fixtures/endpoint/team.json')
 const endpointSpace = require('@fixtures/endpoint/space.json')
 const {sendRequest} = require("@api/features");
 const {replaceIdUrl} = require('@support/utils/replaceIdUrl')
 const methods = require('@fixtures/endpoint/methods.json');
+const { createSpaceAsPreRequisiteGetListIds } = require('@api/prerequisites')
 
 describe('Test to get Spaces', () => {
 
@@ -16,14 +14,10 @@ describe('Test to get Spaces', () => {
     let spaceId = ''
 
     before(() => {
-        getTeams().then((response)=>{
-            teamId = response.body.teams[0].id
-            createSpace(teamId) 
-        })
-        sendRequest(methods.GET,endpointTeam.team).then((response) => {
-            teamId = response.body.teams[0].id
-            sendRequest(methods.POST,replaceIdUrl(endpointSpace.spaceById ,teamId),spaceJson)
-        })      
+        createSpaceAsPreRequisiteGetListIds().then((ids) => {
+            spaceId = ids.spaceId
+            teamId = ids.teamId
+        }) 
     })
 
     it('Verify that is possible to get all spaces', () => {      
@@ -40,8 +34,7 @@ describe('Test to get Spaces', () => {
     });
 
     it('Verify that is possible to get one space', () => {
-        // getSpace(spaceId)
-        sendRequest(methods.GET,replaceIdUrl(endpointSpace.spaceId,teamId))
+        sendRequest(methods.GET,replaceIdUrl(endpointSpace.spaceid,spaceId))
         .should((response)=>{
             expect(response.status).to.eq(200);
             expect(response.body.id).to.be.eq(spaceId);
@@ -53,7 +46,6 @@ describe('Test to get Spaces', () => {
     });
 
     it('Verify a space cannot get information in another team space', () => {
-        // getSpace(spaceBadJson.id)
         sendRequest(methods.GET,replaceIdUrl(endpointSpace.spaceById,spaceBadJson.id))
         .should((response)=>{
             expect(response.status).to.eq(401);
@@ -63,6 +55,6 @@ describe('Test to get Spaces', () => {
     });
 
     after(() => {
-        deleteSpace(spaceId)
+        sendRequest(methods.DELETE,replaceIdUrl(endpointSpace.spaceid, spaceId))
     })
 })

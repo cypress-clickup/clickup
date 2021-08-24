@@ -19,6 +19,20 @@ export function createSpaceAsPreRequisite() {
     })
 }
 
+export function createSpaceAsPreRequisiteGetListIds() {
+    let ids = {}
+    return sendRequest(methods.GET, endpointTeam.team).then((response) => {
+        let id = response.body.teams[0].id
+        ids.teamId = id
+        return id
+    }).then((id) => {
+        sendRequest(methods.POST, replaceIdUrl(endpointSpace.spaceById ,id), spaceJson)
+    }).then((response) => {
+        ids.spaceId = response.body.id
+        return ids
+    })
+}
+
 export function createFolderAsPreRequisite() {
     let ids = {}
     return createSpaceAsPreRequisite()
