@@ -1,7 +1,8 @@
-const {createListAsPreRequisite, deleteList} = require("../../clickup/api/list/listFunctions");
+const {deleteList} = require("../../clickup/api/list/listFunctions");
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
 const listErrorMessage = require("../../fixtures/list/listErrors.json");
 const listBadData = require("../../fixtures/list/listBadData.json");
+const {createListAsPreRequisite} = require("../../clickup/api/prerequisites");
 
 describe('delete a list', () => {
     let spaceId = ''
