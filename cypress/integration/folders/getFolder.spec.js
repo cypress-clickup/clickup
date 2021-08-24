@@ -23,7 +23,7 @@ describe('Test to get Folders', () => {
         })    
     })
 
-    it('Verify that it is possible to get a list of all folders', () => {
+    it('Verify that it is possible to get a list of all folderss', () => {
           sendRequest(methods.GET,replaceIdUrl(endpointFolder.folderById,spaceId))
         .should((response)=>{
             folderId = response.body.folders[0].id

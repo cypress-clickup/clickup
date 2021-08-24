@@ -16,14 +16,14 @@ describe('Tests to delete Spaces', () => {
         }) 
     })
 
-    it('Verify that  it can be possible to delete a specific space', () => {
+    it('Verify that it can be possible to delete a specific space', () => {
         sendRequest(methods.DELETE,replaceIdUrl(endpointSpace.spaceid, spaceId))
             .should((response)=>{
                 expect(response.status).to.eq(200)
             })
     });
 
-    it('Verify a space cannot be created in another’s team space', () => {
+    it('Verify a space cannot be deleted in another team space', () => {
         sendRequest(methods.DELETE,replaceIdUrl(endpointSpace.spaceid, spaceBadJson.id))
             .should((response)=>{
                 expect(response.status).to.eq(401);

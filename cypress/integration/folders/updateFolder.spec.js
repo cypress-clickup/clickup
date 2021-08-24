@@ -33,7 +33,7 @@ describe('Tests to update Space', () => {
         })
     });
 
-    it('Verify a folder cannot be updated in another’s team space', () => {
+    it('Verify a folder cannot be updated in another team space ', () => {
         sendRequest(methods.PUT,replaceIdUrl(endpointFolder.folderId,spaceBadJson.id), folderUpdateJson)
         .should((response)=>{
             expect(response.status).to.eq(401);

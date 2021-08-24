@@ -19,7 +19,7 @@ describe('Tests to update Space', () => {
         })      
     })
 
-    it('Verify a space can be updated with a name', () => {
+    it('Verify space name can be updated', () => {
         sendRequest(methods.PUT,replaceIdUrl(endpointSpace.spaceid, spaceId),spaceUpdateJson)
         .should((response)=>{
             expect(response.status).to.eq(200)
