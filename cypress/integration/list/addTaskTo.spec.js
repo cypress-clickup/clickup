@@ -1,4 +1,4 @@
-const {createListAsPreRequisite} = require("../../clickup/api/list/listFunctions");
+const {createListAsPreRequisite} = require("../../clickup/api/prerequisites");
 const {deleteSpace} = require("../../clickup/api/spaces/spacesFunctions");
 describe('add a task to a list', () => {
     let spaceId = ''
