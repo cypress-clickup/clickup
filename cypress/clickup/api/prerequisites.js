@@ -8,14 +8,19 @@ import endpointFolder from "../../fixtures/endpoint/folder.json";
 import folderJson from "../../fixtures/folder/folder.json";
 import endpointList from "../../fixtures/endpoint/list.json";
 import listJson from "../../fixtures/list/list.json";
+import endpointTask from "../../fixtures/endpoint/task.json";
+import taskJson from "../../fixtures/task/task.json";
 
 export function createSpaceAsPreRequisite() {
+    let ids = {}
     return sendRequest(methods.GET, endpointTeam.team).then((response) => {
-        return response.body.teams[0].id
+        ids.teamId = response.body.teams[0].id
+        return ids.teamId
     }).then((id) => {
         sendRequest(methods.POST, replaceIdUrl(endpointSpace.spaceById ,id), spaceJson)
     }).then((response) => {
-        return response.body.id
+        ids.spaceId = response.body.id
+        return ids
     })
 }
 
@@ -53,9 +58,9 @@ export function createFolderAsPreRequisiteGetListIds() {
 export function createFolderAsPreRequisite() {
     let ids = {}
     return createSpaceAsPreRequisite()
-        .then((id) => {
-            ids.spaceId = id
-            sendRequest(methods.POST, replaceIdUrl(endpointFolder.folderById ,id), folderJson)
+        .then((returnedIds) => {
+            ids = returnedIds
+            sendRequest(methods.POST, replaceIdUrl(endpointFolder.folderById , ids.spaceId), folderJson)
         }).then((response) => {
             ids.folderId = response.body.id
             return ids
@@ -77,11 +82,23 @@ export function createListAsPreRequisite() {
 export function createFolderLessListAsPreRequisite() {
     let ids = {}
     return createSpaceAsPreRequisite()
-        .then((id) => {
-            ids.spaceId = id
+        .then((returnedIds) => {
+            ids = returnedIds
             sendRequest(methods.POST, replaceIdUrl(endpointList.folderLessLists ,ids.spaceId), listJson)
         }).then((response) => {
             ids.listId = response.body.id
+            return ids
+        })
+}
+
+export function createTaskAsPreRequisite() {
+    let ids = {}
+    return createListAsPreRequisite()
+        .then((returnedIds) => {
+            ids = returnedIds
+            sendRequest(methods.POST, replaceIdUrl(endpointTask.taskById ,ids.listId), taskJson)
+        }).then((response) => {
+            ids.taskId = response.body.id
             return ids
         })
 }
