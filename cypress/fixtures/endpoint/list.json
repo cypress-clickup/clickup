@@ -3,5 +3,6 @@
   "listById": "/folder/{id}/list",
   "lists": "/folder/{id}/list",
   "folderLessLists": "/space/{id}/list",
-  "taskInList": "/list/{firstId}/task/{secondId}"
+  "taskInList": "/list/{firstId}/task/{secondId}",
+  "delete": "/list/{id}"
 }
