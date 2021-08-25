@@ -11,6 +11,9 @@
     "notFound": {
       "err": "Not Found",
       "ECODE": "OAUTH_121"
+    },
+    "invalid": {
+      "err": "Project ID invalid"
     }
   }
 }

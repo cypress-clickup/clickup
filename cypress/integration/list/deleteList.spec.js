@@ -1,12 +1,13 @@
-const listJson = require("../../fixtures/list/list.json")
+const listErrorMessage = require("../../fixtures/list/listErrors.json")
+const listBadData = require("../../fixtures/list/listBadData.json")
 const {createListAsPreRequisite} = require("../../clickup/api/prerequisites")
 const {sendRequest} = require("../../clickup/api/features")
 const methods = require("../../fixtures/endpoint/methods.json")
 const {replaceIdUrl} = require("../../support/utils/replaceIdUrl")
-const endpointList = require("../../fixtures/endpoint/list.json")
 const endpointSpace = require("../../fixtures/endpoint/space.json")
+const endpointList = require("../../fixtures/endpoint/list.json")
 
-describe('Get all lists', () => {
+describe('Delete a list', () => {
     let spaceId = ''
     let folderId = ''
     let listId = ''
@@ -19,12 +20,18 @@ describe('Get all lists', () => {
         })
     })
 
-    it('Verify that it can be possible to get all existing lists', () => {
-        sendRequest(methods.GET,replaceIdUrl(endpointList.lists, folderId))
+    it('Verify that is possible to delete a list', () => {
+        sendRequest(methods.DELETE,replaceIdUrl(endpointList.delete, listId))
             .should((response) => {
                 expect(response.status).to.eq(200)
-                expect(response.body.lists[0].name).to.eq(listJson.name)
-                expect(response.body.lists[0].id).to.eq(listId)
+            })
+    })
+
+    it('Verify a list can not be deleted from another’s team space', () => {
+        sendRequest(methods.DELETE,replaceIdUrl(endpointList.delete, listBadData.id))
+            .should((response) => {
+                expect(response.status).to.eq(401);
+                expect(response.body.err).to.be.eq(listErrorMessage.errors.authorized.err);
             })
     })
 
